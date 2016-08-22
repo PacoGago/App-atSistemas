@@ -1,0 +1,72 @@
+RESTFULL
+
+	La app consume JSON con AngularJS.
+	Creamos la app de java con susclases para levantar la BD.
+
+La aplicación es una biblioteca.
+
+Persona:
+
+	Usuario
+	Empleados
+	Libros
+	Alquiler
+	Sala
+	Estantería
+
+BackLog:
+
+Dar de alta usuario
+Dar de baja usuario
+Buscar por autor
+Buscar alquiler por fecha
+Alta libro
+Baja libro
+Realizar alquiler
+Buscar retrasos
+Buscar usuario por DNI
+Buscar libros por salas
+Byscar libros por estantería
+Comprobar estado del alquiler
+Alta empleado
+Baja empleado
+Devolver libro
+Comprobar estado usuario
+Buscar libro por ISBN
+Comprobar historial usuario
+
+Prioridad:
+
+Dar alta libro : 10
+Dar alta usuario : 20
+Alquiler libro : 30
+Devolver libro : 40
+Buscar libro (nombre, ISBN, autor): 50
+Comprobar estado alquiler : 60
+Buscar retrasos : 70
+Comprobar estado usuario : 80
+Dar de alta emleado : 90
+
+drop database library; create database library; use library;
+show databases
+show tables
+
+
+
+
+@manytoone
+private List<Rent> rent = ArrayList<>();
+
+6 tipos de JSON
+Dentro de un JSON puede ir:
+Array
+String
+Entero
+Decimal
+Otro JSON
+Date
+JSON
+
+
+
+
