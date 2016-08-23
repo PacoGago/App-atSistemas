@@ -1,7 +1,14 @@
+
+DAO: Comunicaci—n con con la base de datos
+DTO: Data Transfer Object. Es lo que quiero mostrar de nuestro modelo(MODEL en la BD)
+
+JPA: Es el mapeo. Para mantener la independencia del ORM.
+Hibernate: Es un ORM
+
 RESTFULL
 
 	La app consume JSON con AngularJS.
-	Creamos la app de java con susclases para levantar la BD.
+	Creamos la app de java con sus clases para levantar la BD.
 
 La aplicación es una biblioteca.
 
@@ -66,6 +73,40 @@ Decimal
 Otro JSON
 Date
 JSON
+
+
+------------------
+
+en yml puedes poner createdrop y para pruebas. Nunca para pruebas.
+y tambien se configura para que no sea necesario levantar la MySQL en fisico sino en memoria.
+
+
+
+PROFILE: Para elegir un profaile debemos tener configurado el yml con los diferentes perfiles y en el RUN
+escoges el que quieres para el RUN.  -Dspring.profiles.active::local
+
+Para levantar la app con Gradle compilamos el .jar pasandole el argumento con -D[elperfil]
+
+
+Transnacional RollBackon para que si falla algo se cancela cualquier parte de la APP.
+
+ÑÑ SPRINGCORE: Spring no trabaja con clases. Trabaja con interface y nosotros la implementamos.
+
+	Anotaciones:
+
+		@Repository: Esto son los DAO. Es para indicarle a Spring que esto es un DAO.
+		@Service: Esto es un servicio. Es para indicarle a Spring que es un Service. Se pone arriba del nombre.
+
+		@Component: Es un servicio disponible en todas las capas.
+
+
+		@Autowired: Si tienes un un Service
+
+		@Qualifer
+
+
+
+
 
 
 

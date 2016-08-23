@@ -6,21 +6,20 @@ public class BookDTO implements Serializable {
 
 	private static final long serialVersionUID = 1583585532736761521L;
 
+	private Integer id;
+
 	private String isbn;
 
 	private String title;
 
 	private String author;
 
-	public BookDTO(String isbn, String title, String author) {
-		super();
-		this.isbn = isbn;
-		this.title = title;
-		this.author = author;
+	public Integer getId() {
+		return id;
 	}
 
-	public BookDTO() {
-		super();
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getIsbn() {
