@@ -26,7 +26,6 @@ public class User implements Serializable{
 
 	private String lastname;
 	
-	/*Puede alquilar un libro o no*/
 	private StatusEnum status;
 	
 	@Temporal(TemporalType.DATE)
