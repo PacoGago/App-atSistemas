@@ -9,13 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.at.library.enums.StatusEnum;
-
 @Entity
-public class User implements Serializable{
+public class Employee implements Serializable{
 
-	private static final long serialVersionUID = 4877910540692673267L;
-
+	private static final long serialVersionUID = -6958494906030230973L;
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -25,9 +23,6 @@ public class User implements Serializable{
 	private String name;
 
 	private String lastname;
-	
-	/*Puede alquilar un libro o no*/
-	private StatusEnum status;
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
@@ -64,14 +59,6 @@ public class User implements Serializable{
 		this.lastname = lastname;
 	}
 
-	public StatusEnum getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusEnum status) {
-		this.status = status;
-	}
-	
 	public Date getStartDate() {
 		return startDate;
 	}

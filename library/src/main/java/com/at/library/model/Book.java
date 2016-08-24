@@ -27,7 +27,9 @@ public class Book implements Serializable {
 	private String title;
 
 	private String author;
-
+	
+	private Bookshelves bookshelves;
+	
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 
@@ -64,6 +66,14 @@ public class Book implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	public Bookshelves getBookshelves() {
+		return bookshelves;
+	}
+
+	public void setBookshelves(Bookshelves bookshelves) {
+		this.bookshelves = bookshelves;
 	}
 
 	public StatusEnum getStatus() {
