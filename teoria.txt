@@ -106,8 +106,34 @@ Transnacional RollBackon para que si falla algo se cancela cualquier parte de la
 
 
 
+—— API de una aplicación
+
+	@ApiOperation(value = “que hace la función”)
+
+Para una aplicación normal el API está frente al REST pero esta aplicación tan sencilla hacemos un REST-API.
 
 
+—— Operaciones con un Libro
+					URL		VERBO
+	Mostrar todo los libros 	/book		GET
+	Recuperar			/book/id	GET	
+	Crear				/book		POST
+	Modificar			/book/id	PUT
+	Borrar				/book/id	DELETE
+
+—— CONTROLLER
+	@Controller : Es para controlar la vista con un JSP, por ejemplo, habría que especificar entonces.
+	@RestController : Se especifica que es REST. Nosotros usamos esto.
+
+	@RequesParam
 
 
+public T create(@ApiIgnore Athenticatuib ath, @ResquetBody T t){
+	log.debug(String
 
+}
+
+	En el POST siempre se devuelve el objeto.
+	El PUT como quiera no tiene porque devolver algo.
+
+clase abstracta DTO. Y las demás DTOs hace extends de DTO para implementar su toString.
