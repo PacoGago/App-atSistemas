@@ -27,15 +27,14 @@ public class Book implements Serializable {
 	private String title;
 
 	private String author;
-	
-	private Bookshelves bookshelves;
-	
+		
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status;
+	private StatusEnum status = StatusEnum.ACTIVE;
 
 	@Temporal(TemporalType.DATE)
+	@GeneratedValue
 	private Date startDate;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -68,14 +67,6 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 	
-	public Bookshelves getBookshelves() {
-		return bookshelves;
-	}
-
-	public void setBookshelves(Bookshelves bookshelves) {
-		this.bookshelves = bookshelves;
-	}
-
 	public StatusEnum getStatus() {
 		return status;
 	}
@@ -91,5 +82,5 @@ public class Book implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-
+	
 }

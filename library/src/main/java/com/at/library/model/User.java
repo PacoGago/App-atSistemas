@@ -23,8 +23,6 @@ public class User implements Serializable{
 	private String dni;
 
 	private String name;
-
-	private String lastname;
 	
 	private StatusEnum status;
 	
@@ -55,13 +53,6 @@ public class User implements Serializable{
 		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 
 	public StatusEnum getStatus() {
 		return status;
