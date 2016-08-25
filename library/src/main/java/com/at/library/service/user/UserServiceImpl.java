@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService{
 		return dozer.map(user, User.class);
 	}
 
+	@Override
+	public UserDTO create(UserDTO user) {
+		final User u = transform(user);
+		return transform(userDao.save(u));
+	}
+
 }

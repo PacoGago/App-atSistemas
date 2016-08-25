@@ -29,5 +29,13 @@ public interface UserService {
 	 * @return
 	 */
 	User transform(UserDTO user);
+	
+	/**
+	 * Crear un usuario.
+	 * 
+	 * @param user
+	 * @return
+	 */
+	UserDTO create(UserDTO user);
 
 }
