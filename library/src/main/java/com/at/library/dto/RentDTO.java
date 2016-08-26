@@ -1,11 +1,6 @@
 package com.at.library.dto;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import com.at.library.model.Employee;
-import com.at.library.model.RentPK;
-import com.at.library.model.User;
 
 public class RentDTO implements Serializable{
 	
