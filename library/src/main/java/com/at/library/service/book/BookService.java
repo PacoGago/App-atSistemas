@@ -70,5 +70,20 @@ public interface BookService {
 	 */
 	boolean available(Integer id);
 
+	/**
+	 * Mostramos el estado.
+	 * 
+	 * @param book
+	 * @return estado
+	 */
+	boolean getStatus(Book b);
+	
+	/**
+	 * Cambia el estado de un libro.
+	 * 
+	 * @param book
+	 */
+	void Status(Book b);
+
 
 }
