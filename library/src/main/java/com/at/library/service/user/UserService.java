@@ -37,5 +37,13 @@ public interface UserService {
 	 * @return
 	 */
 	UserDTO create(UserDTO user);
+	
+	/**
+	 * Eliminamos el usuario.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	void delete(Integer id);
 
 }

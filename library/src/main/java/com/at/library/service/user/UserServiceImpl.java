@@ -1,6 +1,7 @@
 package com.at.library.service.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.User;
 
 @Service
@@ -47,7 +49,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDTO create(UserDTO user) {
 		final User u = transform(user);
+		u.setStatus(StatusEnum.ACTIVE);
+		final Date d = new Date();
+		u.setStartDate(d);
 		return transform(userDao.save(u));
 	}
 
+	@Override
+	public void delete(Integer id) {
+		final User u = userDao.findOne(id);
+		u.setStatus(StatusEnum.DISABLE);
+		userDao.save(u);
+	}
+	
 }
