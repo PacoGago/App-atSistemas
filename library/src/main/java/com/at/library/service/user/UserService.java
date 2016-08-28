@@ -45,5 +45,13 @@ public interface UserService {
 	 * @return
 	 */
 	void delete(Integer id);
+	
+	/**
+	 * Buscamos por id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	UserDTO findById(Integer id);
 
 }

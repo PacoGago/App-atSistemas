@@ -61,5 +61,11 @@ public class UserServiceImpl implements UserService{
 		u.setStatus(StatusEnum.DISABLE);
 		userDao.save(u);
 	}
+
+	@Override
+	public UserDTO findById(Integer id) {
+		final User u = userDao.findOne(id);
+		return transform(u);
+	}
 	
 }
