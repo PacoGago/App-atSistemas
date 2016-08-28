@@ -62,5 +62,13 @@ public interface BookService {
 	 */
 	void delete(Integer id);
 
+	/**
+	 * Eliminamos el libro.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	boolean available(Integer id);
+
 
 }

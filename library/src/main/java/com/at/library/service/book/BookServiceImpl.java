@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 
 @Service
@@ -65,6 +66,22 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void delete(Integer id){
 		bookDao.delete(id);	
+	}
+	
+	@Override
+	public boolean available(Integer id){
+		final boolean exist = bookDao.exists(id);
+		if (exist){
+			final Book b = bookDao.findOne(id);
+			if (b.getStatus() == StatusEnum.ACTIVE){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		
+		}
 	}
 	
 }

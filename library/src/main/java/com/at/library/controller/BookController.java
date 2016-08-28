@@ -35,7 +35,7 @@ public class BookController {
 		return bookservice.create(book);
 	}
 	//TODO: Recuperar uno
-	@RequestMapping(value = "/{id}", method = {RequestMethod.POST})
+	@RequestMapping(value = "/{id}", method = {RequestMethod.GET})
 	public BookDTO findOne(@PathVariable("id") Integer id){
 		log.debug(String.format("Recuperamos un libro por id: %s", id));
 		return bookservice.findById(id);
@@ -53,5 +53,12 @@ public class BookController {
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Eliminamos un libro por su id: %s", id));
 		bookservice.delete(id);
+	}
+	
+	//TODO: Disponible
+	@RequestMapping(value = "available/{id}", method = {RequestMethod.GET})
+	public boolean available(@PathVariable("id") Integer id){
+		log.debug(String.format("Comprobamos que un libro esté disponible por su id: %s", id));
+		return bookservice.available(id);
 	}
 }
