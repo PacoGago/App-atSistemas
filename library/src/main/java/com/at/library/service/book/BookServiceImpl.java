@@ -1,6 +1,7 @@
 package com.at.library.service.book;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookDTO create(BookDTO book){
 		final Book b = transform(book);
+		final Date d = new Date();
+		b.setStartDate(d);
 		return transform(bookDao.save(b));
 	}
 	
