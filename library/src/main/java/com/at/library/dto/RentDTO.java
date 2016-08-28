@@ -12,11 +12,11 @@ public class RentDTO implements Serializable{
 	
 	private Integer idEmployee;
 
-	public Integer getIdLibro() {
+	public Integer getIdBook() {
 		return idLibro;
 	}
 
-	public void setIdLibro(Integer idLibro) {
+	public void setIdBook(Integer idLibro) {
 		this.idLibro = idLibro;
 	}
 
