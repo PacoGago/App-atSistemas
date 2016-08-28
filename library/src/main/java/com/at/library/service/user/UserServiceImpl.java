@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDTO create(UserDTO user) {
-		final User u = transform(user);
-		u.setStatus(StatusEnum.ACTIVE);
+		User u = transform(user);
 		final Date d = new Date();
+		u.setStatus(StatusEnum.ACTIVE);
 		u.setStartDate(d);
 		return transform(userDao.save(u));
 	}
