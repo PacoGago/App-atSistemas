@@ -98,7 +98,7 @@ public class RentServiceImpl implements RentService{
 			
 		}else{
 			
-			return new RentDTO();
+			return null;
 		}
 		
 	}
