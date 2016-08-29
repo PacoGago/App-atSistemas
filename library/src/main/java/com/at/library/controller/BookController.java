@@ -55,10 +55,4 @@ public class BookController {
 		bookservice.delete(id);
 	}
 	
-	//TODO: Disponible
-	@RequestMapping(value = "available/{id}", method = {RequestMethod.GET})
-	public boolean available(@PathVariable("id") Integer id){
-		log.debug(String.format("Comprobamos que un libro esté disponible por su id: %s", id));
-		return bookservice.available(id);
-	}
 }
