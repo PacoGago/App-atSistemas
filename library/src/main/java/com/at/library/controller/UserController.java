@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
@@ -20,6 +21,7 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
+	
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	
@@ -34,7 +36,7 @@ public class UserController {
 		log.debug(String.format("Vamos a crear el usuario siguiente: %s", user));
 		return userservice.create(user);
 	}
-
+	
 	//TODO: Ver estado. 
 
 	//TODO: Historial de alquileres
@@ -44,6 +46,14 @@ public class UserController {
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Eliminamos un usuario por su id: %s", id));
 		userservice.delete(id);
+	}
+	
+	//TODO: Búsqueda por DNI y por nombre
+	@RequestMapping(value="/search",method={RequestMethod.GET})
+	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
+							 @RequestParam(value="name",required=false) String name){
+		log.debug(String.format("Búsqueda de usuario con dni: %s, nombre: %s",dni,name));
+		return userservice.findByParams(dni,name);
 	}
 
 

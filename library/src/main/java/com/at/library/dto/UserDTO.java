@@ -6,16 +6,16 @@ import com.at.library.enums.StatusEnum;
 
 public class UserDTO implements Serializable{
 
-	private static final long serialVersionUID = 3827455324138571715L;
-	
+	private static final long serialVersionUID = -5483268118618932343L;
+
 	private Integer id;
+	
+	private String dni;
 
 	private String name;
 	
-	private String DNI;
-	
 	private StatusEnum status;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -24,20 +24,20 @@ public class UserDTO implements Serializable{
 		this.id = id;
 	}
 
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDNI() {
-		return DNI;
-	}
-
-	public void setDNI(String dNI) {
-		DNI = dNI;
 	}
 
 	public StatusEnum getStatus() {

@@ -53,5 +53,30 @@ public interface UserService {
 	 * @return
 	 */
 	UserDTO findById(Integer id);
+	
+	/**
+	 * Buscamos por dni y nombre.
+	 * 
+	 * @param dni, name
+	 * @return List<UserDTO>
+	 */
+	List<UserDTO> findByParams(String dni, String name);
+
+	/**
+	 * Comprueba los usuarios a sancionar y los sanciona.
+	 * 
+	 * @param dni, name
+	 * @return List<UserDTO>
+	 */
+	void penalize();
+
+	
+	/**
+	 * Perdona a los usuarios.
+	 * 
+	 * @param dni, name
+	 * @return List<UserDTO>
+	 */
+	void forgive();
 
 }

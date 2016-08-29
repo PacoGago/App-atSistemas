@@ -6,7 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
@@ -22,6 +25,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
 
 	@Override
 	public List<UserDTO> findAll() {
@@ -35,7 +41,23 @@ public class UserServiceImpl implements UserService{
 		}
 		return res;
 	}
-
+	
+	@Override
+	@Scheduled(cron = "15 0/1 * * * ?")
+	public void penalize() {
+		//Este log lo ponemos cuando realmente se vaya penalizar a alguien.
+		log.debug(String.format("Buscamos los usarios a penalizar."));
+		
+	}
+	@Override
+	//Cada minuto al segundo 45
+	@Scheduled(cron = "45 0/1 * * * ?")
+	public void forgive() {
+		//Este log lo ponemos cuando realmente se vaya a perdonar.
+		log.debug(String.format("Buscamos a quien perdonar."));
+	}
+	
+	
 	@Override
 	public UserDTO transform(User user) {
 		return dozer.map(user, UserDTO.class);
@@ -66,6 +88,13 @@ public class UserServiceImpl implements UserService{
 	public UserDTO findById(Integer id) {
 		final User u = userDao.findOne(id);
 		return transform(u);
+	}
+	
+	@Override
+	public List<UserDTO> findByParams(String dni, String name) {
+		//List<UserDTO> lb = transform(userDao.find(dni,name));
+		//return lb;
+		return null;
 	}
 	
 }
