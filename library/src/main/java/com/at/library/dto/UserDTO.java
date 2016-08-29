@@ -2,7 +2,7 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.UserEnum;
 
 public class UserDTO implements Serializable{
 
@@ -14,7 +14,7 @@ public class UserDTO implements Serializable{
 
 	private String name;
 	
-	private StatusEnum status;
+	private UserEnum status;
 	
 	public Integer getId() {
 		return id;
@@ -40,12 +40,13 @@ public class UserDTO implements Serializable{
 		this.name = name;
 	}
 
-	public StatusEnum getStatus() {
+	public UserEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(UserEnum status) {
 		this.status = status;
 	}
-	
+
+
 }
