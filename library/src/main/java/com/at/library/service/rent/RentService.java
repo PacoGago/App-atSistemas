@@ -39,11 +39,28 @@ public interface RentService {
 	RentDTO create(RentDTO rent);
 	
 	/**
+	 * Buscamos un alquiler por el id del libro
+	 * 
+	 * @param id
+	 * @return Rent
+	 */
+	Rent findById(Integer id);
+	
+	/**
 	 * Devolvemos el libro.
 	 * 
 	 * @param id
 	 * @return
 	 */
 	void delete(Integer id);
+
+	/**
+	 * Devolvemos los alquileres atrasados.
+	 * 
+	 * @return List<Rent>
+	 */
+	List<Rent> findBehind();
+
+
 
 }
