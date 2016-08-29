@@ -38,6 +38,22 @@ public class User implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date forgiveDate;
+	
+	public Date getPunishDate() {
+		return punishDate;
+	}
+
+	public void setPunishDate(Date punishDate) {
+		this.punishDate = punishDate;
+	}
+
+	public Date getForgiveDate() {
+		return forgiveDate;
+	}
+
+	public void setForgiveDate(Date forgiveDate) {
+		this.forgiveDate = forgiveDate;
+	}
 
 	public Integer getId() {
 		return id;
