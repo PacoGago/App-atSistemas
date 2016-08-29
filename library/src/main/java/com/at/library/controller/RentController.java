@@ -15,7 +15,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.service.rent.RentService;
 
 @RestController
-@RequestMapping(value = "/rent")
+@RequestMapping(value = "/book/{idbook}/rent")
 public class RentController {
 	
 	@Autowired
