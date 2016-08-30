@@ -35,7 +35,7 @@ public interface UserService {
 	 * Transforma una lista de usuarios a usuarios DTO
 	 * 
 	 * @param List<User> users
-	 * @return
+	 * @return List<UserDTO>
 	 */
 	List<UserDTO> transform(List<User> users);
 	
