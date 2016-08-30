@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
@@ -54,6 +55,15 @@ public class BookController {
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Eliminamos un libro por su id: %s", id));
 		bookservice.delete(id);
+	}
+	
+	//TODO: Buscar un libro por su titulo, autor e isbn
+	@RequestMapping(value="/search",method={RequestMethod.GET})
+	public List<BookDTO> get(@RequestParam(value="title",required=false) String title, 
+							 @RequestParam(value="author",required=false) String author,
+							 @RequestParam(value="isbn",required=false) String isbn){
+		log.debug(String.format("Búsqueda de libro con titulo: %s, autor: %s, isbn: %s",title,author,isbn));
+		return bookservice.findByParams(title,author,isbn);
 	}
 	
 }

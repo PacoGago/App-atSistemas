@@ -48,6 +48,21 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
+	public List<BookDTO> transform(List<Book> books) {	
+		
+		final Iterator<Book> it = books.iterator();
+		final List<BookDTO> booksDTO = new ArrayList<>();
+		
+		while (it.hasNext()) {
+			final Book b = it.next();
+			final BookDTO bDTO = transform(b);
+			booksDTO.add(bDTO);
+		}
+		
+		return booksDTO;
+	}
+	
+	@Override
 	public BookDTO create(BookDTO book){
 		final Book b = transform(book);
 		final Date d = new Date();
@@ -111,6 +126,13 @@ public class BookServiceImpl implements BookService {
 			b.setStatus(StatusEnum.ACTIVE);
 		}
 		bookDao.save(b);
+	}
+
+	@Override
+	public List<BookDTO> findByParams(String title, String author, String isbn) {
+		
+		List<BookDTO> books = transform(bookDao.find(title, author, isbn));
+		return books;
 	}
 
 }

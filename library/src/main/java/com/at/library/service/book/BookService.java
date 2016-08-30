@@ -31,6 +31,15 @@ public interface BookService {
 	 */
 	Book transform(BookDTO book);
 	
+	
+	/**
+	 * Transforma una lista de libros a libros DTO
+	 * 
+	 * @param List<Book> books
+	 * @return List<BookDTO>
+	 */
+	List<BookDTO> transform(List<Book> books);
+	
 	/**
 	 * Crea un libro.
 	 * 
@@ -85,6 +94,16 @@ public interface BookService {
 	 * @param book
 	 */
 	void Status(Book b);
+	
+	/**
+	 * Buscamos por titulo, autor e isbn.
+	 * 
+	 * @param dni, name
+	 * @return List<UserDTO>
+	 */
+	List<BookDTO> findByParams(String title, String author, String isbn);
+
+	
 
 
 }
