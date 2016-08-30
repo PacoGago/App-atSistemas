@@ -18,15 +18,15 @@ public interface UserService {
 	 * Transfrma un user en un UserDTO
 	 * 
 	 * @param user
-	 * @return
+	 * @return UserDTO
 	 */
 	UserDTO transform(User user);
 
 	/**
 	 * Transforma un UserDTO en un usuario
 	 * 
-	 * @param user
-	 * @return
+	 * @param UserDTO
+	 * @return User
 	 */
 	User transform(UserDTO user);
 	
@@ -42,8 +42,8 @@ public interface UserService {
 	/**
 	 * Crear un usuario.
 	 * 
-	 * @param user
-	 * @return
+	 * @param UserDTO
+	 * @return UserDTO
 	 */
 	UserDTO create(UserDTO user);
 	
@@ -51,7 +51,6 @@ public interface UserService {
 	 * Eliminamos el usuario.
 	 * 
 	 * @param id
-	 * @return
 	 */
 	void delete(Integer id);
 	
@@ -59,7 +58,7 @@ public interface UserService {
 	 * Buscamos por id.
 	 * 
 	 * @param id
-	 * @return
+	 * @return UserDTO
 	 */
 	UserDTO findById(Integer id);
 	
