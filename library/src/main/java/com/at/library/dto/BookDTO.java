@@ -13,6 +13,18 @@ public class BookDTO implements Serializable {
 	private String title;
 
 	private String author;
+	
+	public BookDTO(){
+		super();
+	}
+	
+	public BookDTO(Integer id, String isbn, String title, String author) {
+		super();
+		this.id = id;
+		this.isbn = isbn;
+		this.title = title;
+		this.author = author;
+	}
 
 	public Integer getId() {
 		return id;

@@ -131,7 +131,10 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookDTO> findByParams(String title, String author, String isbn) {
 		
-		List<BookDTO> books = transform(bookDao.find(title, author, isbn));
+		//List<BookDTO> books = transform(bookDao.find(title, author, isbn));
+		//return books;
+		
+		List<BookDTO> books = bookDao.findByTAI(title, author, isbn);
 		return books;
 	}
 
