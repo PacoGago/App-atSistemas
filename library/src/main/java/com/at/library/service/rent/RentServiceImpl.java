@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
+import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -64,7 +65,7 @@ public class RentServiceImpl implements RentService{
 	}
 	
 	@Override
-	public Rent transform(RentDTO rent) {
+	public Rent transform(RentDTO rent) throws NoBookException{
 		
 		final Rent r = new Rent();
 		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
@@ -82,7 +83,7 @@ public class RentServiceImpl implements RentService{
 	}
 
 	@Override
-	public RentDTO create(RentDTO rent) {
+	public RentDTO create(RentDTO rent) throws NoBookException{
 		
 		final Rent r = transform(rent);
 		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
@@ -134,7 +135,7 @@ public class RentServiceImpl implements RentService{
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(Integer id) throws NoBookException{
 		
 		Rent r = findById(id);
 		

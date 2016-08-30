@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.exceptions.NoBookException;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -36,7 +37,7 @@ public class BookController {
 	}
 	//TODO: Recuperar uno
 	@RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-	public BookDTO findOne(@PathVariable("id") Integer id){
+	public BookDTO findOne(@PathVariable("id") Integer id) throws NoBookException {
 		log.debug(String.format("Recuperamos un libro por id: %s", id));
 		return bookservice.findById(id);
 	}

@@ -14,14 +14,19 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.UserEnum;
+import com.at.library.model.Rent;
 import com.at.library.model.User;
+import com.at.library.service.rent.RentService;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private RentService rentservice;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -48,7 +53,24 @@ public class UserServiceImpl implements UserService{
 		//Este log lo ponemos cuando realmente se vaya penalizar a alguien.
 		log.debug(String.format("Buscamos los usarios a penalizar."));
 		
+		final Iterable<Rent> ir = rentservice.findBehind();
+		final Iterator<Rent> it = ir.iterator();
+		
+		while(it.hasNext()){
+			
+			final User u = it.next().getUser();
+			
+			if(u.getForgiveDate() == null){
+				
+				
+				
+			}else{
+				
+				
+			}
+		}
 	}
+	
 	@Override
 	//Cada minuto al segundo 45
 	@Scheduled(cron = "45 0/1 * * * ?")
@@ -72,7 +94,7 @@ public class UserServiceImpl implements UserService{
 	public UserDTO create(UserDTO user) {
 		User u = transform(user);
 		final Date d = new Date();
-		u.setStatus(StatusEnum.ACTIVE);
+		u.setStatus(UserEnum.ABLE);
 		u.setStartDate(d);
 		return transform(userDao.save(u));
 	}
@@ -80,7 +102,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void delete(Integer id) {
 		final User u = userDao.findOne(id);
-		u.setStatus(StatusEnum.DISABLE);
+		u.setStatus(UserEnum.ERASED);
 		userDao.save(u);
 	}
 

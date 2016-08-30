@@ -3,6 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -44,7 +45,7 @@ public interface BookService {
 	 * @param id
 	 * @return
 	 */
-	BookDTO findById(Integer id);
+	BookDTO findById(Integer id) throws NoBookException;
 	
 	/**
 	 * Actualizamos el libro.

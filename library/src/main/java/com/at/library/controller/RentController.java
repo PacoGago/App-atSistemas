@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
+import com.at.library.exceptions.NoBookException;
+import com.at.library.service.rent.RentImportService;
 import com.at.library.service.rent.RentService;
 
 @RestController
@@ -20,6 +22,10 @@ public class RentController {
 	
 	@Autowired
 	private RentService rentservice;
+	
+	@Autowired
+	private RentImportService rentimportservice;
+	
 	private static final Logger log = LoggerFactory.getLogger(RentController.class);
 
 	@RequestMapping(method = { RequestMethod.GET })
@@ -29,16 +35,23 @@ public class RentController {
 	
 	//TODO: Alquiler
 	@RequestMapping(method = { RequestMethod.POST })
-	public RentDTO create(@RequestBody RentDTO rent){
+	public RentDTO create(@RequestBody RentDTO rent) throws NoBookException{
 		log.debug(String.format("Vamos a crear el alquiler siguiente: %s", rent));
 		return rentservice.create(rent);
 	}
 	
 	//TODO: Devolver
 	@RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws NoBookException{
 		log.debug(String.format("Eliminamos un alquio por su id: %s", id));
 		rentservice.delete(id);
+	}
+	
+	//TODO: Informe de alquileres
+	@RequestMapping(value = "/import", method = {RequestMethod.GET})
+	public void imp(){
+		log.debug(String.format("Informe de alquileres."));
+		rentimportservice.imp();
 	}
 
 }

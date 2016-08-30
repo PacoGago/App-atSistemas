@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 
 @Service
@@ -55,9 +56,15 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public BookDTO findById(Integer id){
+	public BookDTO findById(Integer id) throws NoBookException {
+		
 		final Book b = bookDao.findOne(id);
-		return transform(b);
+		
+		if (b==null){
+			throw new NoBookException();
+		}else{
+			return transform(b);
+		}	
 	}
 	
 	@Override
