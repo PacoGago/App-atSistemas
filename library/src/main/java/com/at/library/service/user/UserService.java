@@ -30,6 +30,15 @@ public interface UserService {
 	 */
 	User transform(UserDTO user);
 	
+	
+	/**
+	 * Transforma una lista de usuarios a usuarios DTO
+	 * 
+	 * @param List<User> users
+	 * @return
+	 */
+	List<UserDTO> transform(List<User> users);
+	
 	/**
 	 * Crear un usuario.
 	 * 
@@ -78,5 +87,7 @@ public interface UserService {
 	 * @return List<UserDTO>
 	 */
 	void forgive();
+
+	
 
 }

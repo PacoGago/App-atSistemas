@@ -89,6 +89,21 @@ public class UserServiceImpl implements UserService{
 	public User transform(UserDTO user) {
 		return dozer.map(user, User.class);
 	}
+	
+	@Override
+	public List<UserDTO> transform(List<User> users) {	
+		
+		final Iterator<User> it = users.iterator();
+		final List<UserDTO> usersDTO = new ArrayList<>();
+		
+		while (it.hasNext()) {
+			final User u = it.next();
+			final UserDTO uDTO = transform(u);
+			usersDTO.add(uDTO);
+		}
+		
+		return usersDTO;
+	}
 
 	@Override
 	public UserDTO create(UserDTO user) {
@@ -114,9 +129,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public List<UserDTO> findByParams(String dni, String name) {
-		//List<UserDTO> lb = transform(userDao.find(dni,name));
-		//return lb;
-		return null;
+		
+		List<UserDTO> users = transform(userDao.find(dni,name));
+		return users;
+		
+		//List<UserDTO> users = userDao.findByDniName(dni,name);
+		//return users;
+		
 	}
 	
 }
