@@ -31,6 +31,8 @@ public interface RentService {
 	 */
 	Rent transform(RentDTO rent) throws NoBookException;
 	
+	public List<RentDTO> transform(List<Rent> rents);
+	
 	/**
 	 * Realizamos un alquiler.
 	 * 
@@ -61,6 +63,14 @@ public interface RentService {
 	 * @return List<Rent>
 	 */
 	List<Rent> findBehind();
+
+	
+	/**
+	 * Historial de alquileres de un libro.
+	 * 
+	 * @return List<RentDTO>
+	 */
+	List<RentDTO> findByParams(Integer id);
 
 
 

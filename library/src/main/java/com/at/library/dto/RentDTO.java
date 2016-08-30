@@ -11,6 +11,17 @@ public class RentDTO implements Serializable{
 	private Integer idUser;
 	
 	private Integer idEmployee;
+	
+	public RentDTO(){
+		super();
+	}
+	
+	public RentDTO(Integer idLibro, Integer idUser, Integer idEmployee) {
+		super();
+		this.idLibro = idLibro;
+		this.idUser = idUser;
+		this.idEmployee = idEmployee;
+	}
 
 	public Integer getIdBook() {
 		return idLibro;

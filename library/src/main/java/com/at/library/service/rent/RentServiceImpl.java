@@ -81,6 +81,21 @@ public class RentServiceImpl implements RentService{
 		
 		return r;
 	}
+	
+	@Override
+	public List<RentDTO> transform(List<Rent> rents) {	
+		
+		final Iterator<Rent> it = rents.iterator();
+		final List<RentDTO> rentsDTO = new ArrayList<>();
+		
+		while (it.hasNext()) {
+			final Rent r = it.next();
+			final RentDTO rDTO = transform(r);
+			rentsDTO.add(rDTO);
+		}
+		
+		return rentsDTO;
+	}
 
 	@Override
 	public RentDTO create(RentDTO rent) throws NoBookException{
@@ -148,6 +163,14 @@ public class RentServiceImpl implements RentService{
 			
 		}
 		
+	}
+
+
+	@Override
+	public List<RentDTO> findByParams(Integer id) {
+		
+		List<RentDTO> rents = transform(rentDao.findBookById(id));
+		return rents;
 	}
 
 }

@@ -43,7 +43,7 @@ public class RentController {
 	//TODO: Devolver
 	@RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
 	public void delete(@PathVariable("id") Integer id) throws NoBookException{
-		log.debug(String.format("Eliminamos un alquio por su id: %s", id));
+		log.debug(String.format("Eliminamos un alquiler por su id: %s", id));
 		rentservice.delete(id);
 	}
 	
@@ -52,6 +52,14 @@ public class RentController {
 	public void imp(){
 		log.debug(String.format("Informe de alquileres."));
 		rentimportservice.imp();
+	}
+	
+	//TODO: Alquileres de un libro
+	@RequestMapping(value="/search/{id}",method={RequestMethod.GET})
+	public List<RentDTO> get(@PathVariable("id") Integer id) throws NoBookException{
+		log.debug(String.format("Historial de un alquiler por su id: %s", id));
+		return rentservice.findByParams(id);
+		//return null;
 	}
 
 }
