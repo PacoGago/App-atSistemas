@@ -11,15 +11,20 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
+import com.at.library.service.rent.RentService;
 
 @Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private BookDao bookDao;
+	
+	@Autowired
+	private RentService rentservice;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -131,11 +136,26 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookDTO> findByParams(String title, String author, String isbn) {
 		
-		//List<BookDTO> books = transform(bookDao.find(title, author, isbn));
-		//return books;
-		
-		List<BookDTO> books = bookDao.findByTAI(title, author, isbn);
+		List<BookDTO> books = transform(bookDao.find(title, author, isbn));
 		return books;
+		
+		//List<BookDTO> books = bookDao.findByTAI(title, author, isbn);
+		//return books;
+	}
+	
+	@Override
+	public List<RentDTO> getHistory(Integer bookId) throws NoBookException {
+		
+		//TODO: Capturar la excepción cuando se haga del noRent
+		Book b = bookDao.findOne(bookId);
+		
+		if(b==null){
+			throw new NoBookException ();
+		}
+		else{
+			List<RentDTO> rDTOs = rentservice.getByBookId(bookId);
+			return rDTOs;
+		}
 	}
 
 }

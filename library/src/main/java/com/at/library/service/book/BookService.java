@@ -3,6 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 
@@ -102,6 +103,14 @@ public interface BookService {
 	 * @return List<UserDTO>
 	 */
 	List<BookDTO> findByParams(String title, String author, String isbn);
+
+	/**
+	 * Historial de alquileres de un libro.
+	 * 
+	 * @param bookId
+	 * @return List<RentDTO>
+	 */
+	List<RentDTO> getHistory(Integer bookId) throws NoBookException;
 
 	
 
