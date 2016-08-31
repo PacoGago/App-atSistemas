@@ -6,11 +6,9 @@ public class RentDTO implements Serializable{
 	
 	private static final long serialVersionUID = -1665259051800304339L;
 
-	private Integer idLibro;
+	private Integer book;
 	
-	private Integer idUser;
-	
-	private Integer idEmployee;
+	private Integer user;
 	
 	public RentDTO(){
 		super();
@@ -18,33 +16,24 @@ public class RentDTO implements Serializable{
 	
 	public RentDTO(Integer idLibro, Integer idUser, Integer idEmployee) {
 		super();
-		this.idLibro = idLibro;
-		this.idUser = idUser;
-		this.idEmployee = idEmployee;
+		this.book = idLibro;
+		this.user = idUser;
 	}
 
 	public Integer getIdBook() {
-		return idLibro;
+		return book;
 	}
 
 	public void setIdBook(Integer idLibro) {
-		this.idLibro = idLibro;
+		this.book = idLibro;
 	}
 
 	public Integer getIdUser() {
-		return idUser;
+		return user;
 	}
 
 	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
-	}
-
-	public Integer getIdEmployee() {
-		return idEmployee;
-	}
-
-	public void setIdEmployee(Integer idEmployee) {
-		this.idEmployee = idEmployee;
+		this.user = idUser;
 	}
 	
 }

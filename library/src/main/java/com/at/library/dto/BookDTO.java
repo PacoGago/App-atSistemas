@@ -14,6 +14,14 @@ public class BookDTO implements Serializable {
 
 	private String author;
 	
+	private String status; //RENTED, OK
+	
+	private Integer year;
+	
+	private String image;
+	
+	private String description;
+	
 	public BookDTO(){
 		super();
 	}
@@ -56,6 +64,38 @@ public class BookDTO implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }
