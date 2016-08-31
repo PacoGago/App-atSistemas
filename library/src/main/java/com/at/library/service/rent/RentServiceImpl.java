@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,12 @@ import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
-import com.at.library.model.Employee;
+//import com.at.library.model.Employee;
 import com.at.library.model.Rent;
 import com.at.library.model.RentPK;
 import com.at.library.model.User;
 import com.at.library.service.book.BookService;
-import com.at.library.service.employee.EmployeeService;
+//import com.at.library.service.employee.EmployeeService;
 import com.at.library.service.user.UserService;
 
 @Service
@@ -34,11 +33,9 @@ public class RentServiceImpl implements RentService{
 	@Autowired
 	private UserService userservice;
 	
-	@Autowired
-	private EmployeeService employeeservice;
+	//@Autowired
+	//private EmployeeService employeeservice;
 	
-	
-
 	@Override
 	public List<RentDTO> findAll() {
 		final Iterable<Rent> findAll = rentDao.findAll();
@@ -57,7 +54,6 @@ public class RentServiceImpl implements RentService{
 	public RentDTO transform(Rent rent) {
 		
 		final RentDTO rentdto = new RentDTO();
-		rentdto.setIdEmployee(rent.getEmployee().getId());
 		rentdto.setIdBook(rent.getRentpk().getBook().getId());
 		rentdto.setIdUser(rent.getUser().getId());
 		
@@ -70,13 +66,11 @@ public class RentServiceImpl implements RentService{
 		final Rent r = new Rent();
 		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
 		User u = userservice.transform(userservice.findById(rent.getIdUser()));
-		Employee e = employeeservice.transform(employeeservice.findById(rent.getIdEmployee()));
 		
 		RentPK rentpk = new RentPK();
 		rentpk.setBook(b);
 		
 		r.setRentpk(rentpk);
-		r.setEmployee(e);
 		r.setUser(u);
 		
 		return r;
@@ -145,6 +139,22 @@ public class RentServiceImpl implements RentService{
 	}
 	
 	@Override
+	public List<RentDTO> getByBookId(Integer bookId){
+		
+		final List<RentDTO> rDTOs = transform(rentDao.findBookById(bookId));
+		
+		if(!rDTOs.isEmpty()){
+			
+			return rDTOs;
+			
+		}else{
+			
+			//TODO: Lanzar excepción no hay alquileres de ese libro
+			return null;
+		}
+	}
+	
+	@Override
 	public List<Rent> findBehind() {
 		return rentDao.behind();
 	}
@@ -163,14 +173,5 @@ public class RentServiceImpl implements RentService{
 			
 		}
 		
-	}
-
-
-	@Override
-	public List<RentDTO> findByParams(Integer id) {
-		
-		List<RentDTO> rents = transform(rentDao.findBookById(id));
-		return rents;
-	}
-
+	}	
 }

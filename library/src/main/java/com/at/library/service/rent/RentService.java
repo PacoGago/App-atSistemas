@@ -63,14 +63,13 @@ public interface RentService {
 	 * @return List<Rent>
 	 */
 	List<Rent> findBehind();
-
 	
 	/**
 	 * Historial de alquileres de un libro.
 	 * 
 	 * @return List<RentDTO>
 	 */
-	List<RentDTO> findByParams(Integer id);
+	List<RentDTO> getByBookId(Integer bookId);
 
 
 
