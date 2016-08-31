@@ -22,7 +22,7 @@ public interface RentDao extends CrudRepository<Rent, Integer>{
 	//@Query(value="SELECT new com.at.library.dto.RentDTO(idLibro, idUser, idEmployee) from Rent as r where rent.rentpk.book.id = ?1", nativeQuery=false)
 	//public List<RentDTO> findBookById(Integer id);
 	
-	@Query(value="SELECT rent from Rent as rent where rent.rentpk.book.id = ?1")
+	@Query(value="SELECT rent from Rent as rent where rent.rentpk.book.id=?1")
 	public List<Rent> findBookById(Integer id);
 	
 
