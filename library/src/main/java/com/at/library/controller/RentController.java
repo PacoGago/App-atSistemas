@@ -41,9 +41,9 @@ public class RentController {
 	}
 	
 	//TODO: Devolver
-	@RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id) throws NoBookException{
-		log.debug(String.format("Eliminamos un alquiler por su id: %s", id));
+	@RequestMapping(value = "/{idBook}", method = {RequestMethod.DELETE})
+	public void delete(@PathVariable("idBook") Integer id) throws NoBookException{
+		log.debug(String.format("Eliminamos un alquiler por el id del libro: %s", id));
 		rentservice.delete(id);
 	}
 	
@@ -58,7 +58,7 @@ public class RentController {
 	@RequestMapping(value="/search/{id}",method={RequestMethod.GET})
 	public List<RentDTO> get(@PathVariable("id") Integer id) throws NoBookException{
 		log.debug(String.format("Historial de un alquiler por su id: %s", id));
-		return rentservice.findByParams(id);
+		return rentservice.getByBookId(id);
 		//return null;
 	}
 
