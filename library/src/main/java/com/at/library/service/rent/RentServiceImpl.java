@@ -172,6 +172,5 @@ public class RentServiceImpl implements RentService{
 			rentDao.save(r);
 			
 		}
-		
 	}	
 }
