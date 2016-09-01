@@ -33,19 +33,22 @@ public class UserController {
 	//TODO: Crear
 	@RequestMapping(method = { RequestMethod.POST })
 	public UserDTO create(@RequestBody UserDTO user){
-		log.debug(String.format("Vamos a crear el usuario siguiente: %s", user));
+		log.debug(String.format("Crearmos el usuario siguiente: %s", user));
 		return userservice.create(user);
 	}
-	
-	//TODO: Ver estado. 
-
-	//TODO: Historial de alquileres
-	
-	//TODO: Borrar
+		
+	//TODO: Borrar por id
 	@RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void deleteById(@PathVariable("id") Integer id){
 		log.debug(String.format("Eliminamos un usuario por su id: %s", id));
-		userservice.delete(id);
+		userservice.deleteById(id);
+	}
+	
+	//TODO: Borrar por DTO
+	@RequestMapping(method = {RequestMethod.DELETE})
+	public void delete(@RequestBody UserDTO user){
+		log.debug(String.format("Eliminamos un usuario por su id: %s", user));
+		userservice.delete(user);
 	}
 	
 	//TODO: Búsqueda por DNI y por nombre
@@ -55,6 +58,4 @@ public class UserController {
 		log.debug(String.format("Búsqueda de usuario con dni: %s, nombre: %s",dni,name));
 		return userservice.findByParams(dni,name);
 	}
-
-
 }

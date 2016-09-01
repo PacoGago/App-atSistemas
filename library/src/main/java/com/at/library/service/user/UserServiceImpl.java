@@ -115,8 +115,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void deleteById(Integer id) {
 		final User u = userDao.findOne(id);
+		u.setStatus(UserEnum.ERASED);
+		userDao.save(u);
+	}
+	
+	@Override
+	public void delete(UserDTO user) {
+		final User u = userDao.findOne(user.getId());
 		u.setStatus(UserEnum.ERASED);
 		userDao.save(u);
 	}
@@ -132,6 +139,8 @@ public class UserServiceImpl implements UserService{
 		
 		List<UserDTO> users = transform(userDao.find(dni,name));
 		return users;
+		
+		//TODO: Sólo devolver los usuarios Activos en la búsqueda.
 		
 		//List<UserDTO> users = userDao.findByDniName(dni,name);
 		//return users;

@@ -52,7 +52,15 @@ public interface UserService {
 	 * 
 	 * @param id
 	 */
-	void delete(Integer id);
+	void deleteById(Integer id);
+	
+	
+	/**
+	 * Eliminamos el usuario.
+	 * 
+	 * @param UserDTO user
+	 */
+	void delete(UserDTO user);
 	
 	/**
 	 * Buscamos por id.
@@ -86,7 +94,5 @@ public interface UserService {
 	 * @return List<UserDTO>
 	 */
 	void forgive();
-
-	
 
 }
