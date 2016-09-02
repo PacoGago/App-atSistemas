@@ -138,13 +138,20 @@ public class UserServiceImpl implements UserService{
 	public List<UserDTO> findByParams(String dni, String name) {
 		
 		List<UserDTO> users = transform(userDao.find(dni,name));
-		return users;
 		
-		//TODO: Sólo devolver los usuarios Activos en la búsqueda.
+		final Iterator<UserDTO> it = users.iterator();
+		final List<UserDTO> usersDTO = new ArrayList<>();
 		
-		//List<UserDTO> users = userDao.findByDniName(dni,name);
-		//return users;
+		while (it.hasNext()) {
+			
+			final UserDTO uDTO = it.next();
+			
+			if (uDTO.getStatus() != UserEnum.ERASED){
+				usersDTO.add(uDTO);
+			}
+		}
+		
+		return usersDTO;
 		
 	}
-	
 }
