@@ -2,6 +2,8 @@ package com.at.library.service.book;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
@@ -61,20 +63,26 @@ public interface BookService {
 	 * Actualizamos el libro.
 	 * 
 	 * @param book
-	 * @return
+	 * @return BookDTO
 	 */
-	void update(BookDTO book);
+	BookDTO update(BookDTO bDTO) throws NoBookException ;
 	
 	/**
 	 * Eliminamos el libro.
 	 * 
 	 * @param id
-	 * @return
 	 */
-	void delete(Integer id);
-
+	void deleteById(Integer id) throws NoBookException;
+	
 	/**
 	 * Eliminamos el libro.
+	 * 
+	 * @param BookDTO
+	 */
+	void delete(BookDTO bDTO) throws NoBookException;
+
+	/**
+	 * Comprovamos si está disponible
 	 * 
 	 * @param id
 	 * @return
@@ -102,7 +110,7 @@ public interface BookService {
 	 * @param dni, name
 	 * @return List<UserDTO>
 	 */
-	List<BookDTO> findByParams(String title, String author, String isbn);
+	List<BookDTO> findByParams(String title, String author, String isbn, Pageable pages) throws NoBookException;
 
 	/**
 	 * Historial de alquileres de un libro.

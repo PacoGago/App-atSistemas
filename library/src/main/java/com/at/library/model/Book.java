@@ -29,7 +29,7 @@ public class Book implements Serializable {
 	private String author;
 		
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status = StatusEnum.ACTIVE;
+	private StatusEnum status = StatusEnum.OK;
 
 	@Temporal(TemporalType.DATE)
 	@GeneratedValue
