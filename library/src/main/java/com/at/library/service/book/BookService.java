@@ -120,6 +120,8 @@ public interface BookService {
 	 */
 	List<RentDTO> getHistory(Integer bookId) throws NoBookException;
 
+	Book getById(Integer id) throws NoBookException;
+
 	
 
 

@@ -55,7 +55,7 @@ public class RentController {
 	}
 	
 	//TODO: Alquileres de un libro
-	@RequestMapping(value="/search/{id}",method={RequestMethod.GET})
+	@RequestMapping(value="/{id}",method={RequestMethod.GET})
 	public List<RentDTO> get(@PathVariable("id") Integer id) throws NoBookException{
 		log.debug(String.format("Historial de un alquiler por su id: %s", id));
 		return rentservice.getByBookId(id);

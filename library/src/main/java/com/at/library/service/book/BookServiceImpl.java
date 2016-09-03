@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.dto.enums.StatusBook;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 import com.at.library.service.rent.RentService;
@@ -77,10 +77,23 @@ public class BookServiceImpl implements BookService {
 		final Book b = transform(book);
 		final Date d = new Date();
 		b.setStartDate(d);
-		b.setStatus(StatusEnum.OK);
+		b.setStatus(StatusBook.OK);
 		final BookDTO bDTO = transform(bookDao.save(b));
 		findGoogleApi(bDTO);
 		return bDTO;
+	}
+	
+	@Override
+	public Book getById(Integer id) throws NoBookException {
+		
+		final Book b = bookDao.findOne(id);
+		
+		if (b==null){
+			throw new NoBookException();
+		}else{
+			
+			return b;
+		}	
 	}
 	
 	@Override
@@ -136,7 +149,7 @@ public class BookServiceImpl implements BookService {
 		final boolean exist = bookDao.exists(id);
 		if (exist){
 			final Book b = bookDao.findOne(id);
-			if (b.getStatus() == StatusEnum.OK){
+			if (b.getStatus() == StatusBook.OK){
 				return true;
 			}else{
 				return false;
@@ -149,7 +162,7 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public boolean getStatus(Book b){
-		if(b.getStatus() == StatusEnum.OK){
+		if(b.getStatus() == StatusBook.OK){
 			return true;
 		}else{
 			return false;
@@ -158,10 +171,10 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public void Status(Book b) {
-		if (b.getStatus() == StatusEnum.OK){
-			b.setStatus(StatusEnum.RENTED);
+		if (b.getStatus() == StatusBook.OK){
+			b.setStatus(StatusBook.RENTED);
 		}else{
-			b.setStatus(StatusEnum.OK);
+			b.setStatus(StatusBook.OK);
 		}
 		bookDao.save(b);
 	}

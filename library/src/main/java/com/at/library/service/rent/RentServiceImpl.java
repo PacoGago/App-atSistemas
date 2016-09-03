@@ -6,11 +6,17 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.at.library.controller.RentController;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.enums.StatusBook;
+//import com.at.library.dto.enums.StatusRent;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 //import com.at.library.model.Employee;
@@ -33,6 +39,9 @@ public class RentServiceImpl implements RentService{
 	@Autowired
 	private UserService userservice;
 	
+	@Autowired
+	private DozerBeanMapper dozer;
+	
 	//@Autowired
 	//private EmployeeService employeeservice;
 	
@@ -53,17 +62,21 @@ public class RentServiceImpl implements RentService{
 	@Override
 	public RentDTO transform(Rent rent) {
 		
-		final RentDTO rentdto = new RentDTO();
+		return dozer.map(rent, RentDTO.class);
+		
+		/*final RentDTO rentdto = new RentDTO();
 		rentdto.setIdBook(rent.getRentpk().getBook().getId());
 		rentdto.setIdUser(rent.getUser().getId());
 		
-		return rentdto;
+		return rentdto;*/
 	}
 	
 	@Override
 	public Rent transform(RentDTO rent) throws NoBookException{
 		
-		final Rent r = new Rent();
+		return dozer.map(rent, Rent.class);
+		
+		/*final Rent r = new Rent();
 		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
 		User u = userservice.transform(userservice.findById(rent.getIdUser()));
 		
@@ -73,7 +86,7 @@ public class RentServiceImpl implements RentService{
 		r.setRentpk(rentpk);
 		r.setUser(u);
 		
-		return r;
+		return r;*/
 	}
 	
 	@Override
@@ -91,9 +104,52 @@ public class RentServiceImpl implements RentService{
 		return rentsDTO;
 	}
 
+	private static final Logger log = LoggerFactory.getLogger(RentServiceImpl.class);
+	
 	@Override
 	public RentDTO create(RentDTO rent) throws NoBookException{
 		
+		log.debug(String.format("Vamos a crear el alquiler siguiente: %s", rent.getIdBook()));
+		Book b = bookservice.getById(rent.getIdBook());
+		
+		if (b != null){
+				
+			if (bookservice.getStatus(b)){
+				
+				final User user = userservice.transform(userservice.findById(rent.getIdUser()));
+					
+				if (user != null){
+						
+						RentPK rentPK = new RentPK();
+						rentPK.setBook(b);
+						rentPK.setStartDate(new Date());
+						
+						Rent r = new Rent();
+						r.setRentpk(rentPK);
+						r.setUser(user);
+						rentDao.save(r);
+						
+						b.setStatus(StatusBook.RENTED);
+						bookservice.update(bookservice.transform(b));
+						
+						RentDTO rDTO = new RentDTO();
+						rDTO.setIdBook(r.getRentpk().getBook().getId());
+						rDTO.setIdUser(r.getUser().getId());
+						
+						return rDTO;
+						
+				}else{return null;}//Devolver excepción
+					
+			}else{return null;}//Devolver Excepción
+				
+		}else{throw new NoBookException();}
+			
+	}
+		
+		
+
+		
+		/***********************
 		final Rent r = transform(rent);
 		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
 		
@@ -120,7 +176,7 @@ public class RentServiceImpl implements RentService{
 			return null;
 		}
 		
-	}
+	}*/
 	
 	@Override
 	public Rent findById(Integer id) {

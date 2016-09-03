@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.dto.enums.StatusBook;
 
 @Entity
 public class Book implements Serializable {
@@ -29,7 +29,7 @@ public class Book implements Serializable {
 	private String author;
 		
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status = StatusEnum.OK;
+	private StatusBook status = StatusBook.OK;
 
 	@Temporal(TemporalType.DATE)
 	@GeneratedValue
@@ -67,11 +67,11 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 	
-	public StatusEnum getStatus() {
+	public StatusBook getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(StatusBook status) {
 		this.status = status;
 	}
 
