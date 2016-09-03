@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class RentDTO implements Serializable{
 
 
-	private static final long serialVersionUID = 1462949654282073004L;
+	private static final long serialVersionUID = 8809918185684486443L;
 
 	private Integer book;
 	
@@ -15,16 +15,15 @@ public class RentDTO implements Serializable{
 		return book;
 	}
 
-	public void setIdBook(Integer idLibro) {
-		this.book = idLibro;
+	public void setIdBook(Integer book) {
+		this.book = book;
 	}
 
 	public Integer getIdUser() {
 		return user;
 	}
 
-	public void setIdUser(Integer idUser) {
-		this.user = idUser;
+	public void setIdUser(Integer user) {
+		this.user = user;
 	}
-	
 }

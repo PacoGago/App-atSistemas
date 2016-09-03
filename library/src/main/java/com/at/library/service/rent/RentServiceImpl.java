@@ -1,8 +1,8 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import org.joda.time.DateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,11 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.at.library.controller.RentController;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.enums.StatusBook;
-//import com.at.library.dto.enums.StatusRent;
+import com.at.library.dto.enums.StatusRent;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.model.Book;
 //import com.at.library.model.Employee;
@@ -63,30 +62,13 @@ public class RentServiceImpl implements RentService{
 	public RentDTO transform(Rent rent) {
 		
 		return dozer.map(rent, RentDTO.class);
-		
-		/*final RentDTO rentdto = new RentDTO();
-		rentdto.setIdBook(rent.getRentpk().getBook().getId());
-		rentdto.setIdUser(rent.getUser().getId());
-		
-		return rentdto;*/
+
 	}
 	
 	@Override
 	public Rent transform(RentDTO rent) throws NoBookException{
 		
-		return dozer.map(rent, Rent.class);
-		
-		/*final Rent r = new Rent();
-		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
-		User u = userservice.transform(userservice.findById(rent.getIdUser()));
-		
-		RentPK rentpk = new RentPK();
-		rentpk.setBook(b);
-		
-		r.setRentpk(rentpk);
-		r.setUser(u);
-		
-		return r;*/
+		return dozer.map(rent, Rent.class);	
 	}
 	
 	@Override
@@ -122,11 +104,14 @@ public class RentServiceImpl implements RentService{
 						
 						RentPK rentPK = new RentPK();
 						rentPK.setBook(b);
-						rentPK.setStartDate(new Date());
+						Date d = new Date();
+						rentPK.setStartDate(d);
 						
 						Rent r = new Rent();
 						r.setRentpk(rentPK);
 						r.setUser(user);
+						DateTime date = new DateTime(d);
+						r.setEndDate(date.plusDays(7).toDate());
 						rentDao.save(r);
 						
 						b.setStatus(StatusBook.RENTED);
@@ -146,38 +131,6 @@ public class RentServiceImpl implements RentService{
 			
 	}
 		
-		
-
-		
-		/***********************
-		final Rent r = transform(rent);
-		Book b = bookservice.transform(bookservice.findById(rent.getIdBook()));
-		
-		if (bookservice.getStatus(b)){
-			
-			Date d = new Date();
-			
-			bookservice.Status(b);
-		
-			
-			Calendar cal = Calendar.getInstance();
-			r.getRentpk().setStartDate(cal.getTime());
-			cal.setTime(d);
-			cal.add(Calendar.DATE, 3);
-			d = cal.getTime();
-			
-			r.setEndDate(d);
-			
-			return transform(rentDao.save(r));
-			
-			
-		}else{
-			
-			return null;
-		}
-		
-	}*/
-	
 	@Override
 	public Rent findById(Integer id) {
 		
@@ -222,9 +175,9 @@ public class RentServiceImpl implements RentService{
 		
 		if(r != null){
 			
-			r.setEndDate(Calendar.getInstance().getTime());
 			Book b = bookservice.transform(bookservice.findById(id));
 			bookservice.Status(b);
+			r.setStatus(StatusRent.COMPLETED);
 			rentDao.save(r);
 			
 		}
