@@ -28,11 +28,6 @@ public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	
-	@RequestMapping(method = { RequestMethod.GET })
-	public List<UserDTO> getAll() {
-		return userservice.findAll();
-	}
-	
 	//TODO: Crear
 	@RequestMapping(method = { RequestMethod.POST })
 	public UserDTO create(@RequestBody UserDTO user)throws NoDTOException{

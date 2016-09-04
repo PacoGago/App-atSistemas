@@ -175,19 +175,19 @@ public class RentServiceImpl implements RentService{
 	@Override
 	public void delete(Integer id) throws NoBookException, NoRentException{
 		
-		Rent r = findById(id);
+		Book b = bookservice.getById(id);
 		
-		if(r != null){
+		if(b == null){
+			throw new NoBookException();
+		}
+		else {
 			
-			Book b = bookservice.transform(bookservice.findById(id));
-			bookservice.Status(b);
+			Rent r = rentDao.getByBookId(b.getId());
 			r.setStatus(StatusRent.COMPLETED);
+			r.setEndDate(new Date());
+			
+			bookservice.Status(b);
 			rentDao.save(r);
-			
-		}else{
-			
-			throw new NoRentException();
-			
 		}
 	}	
 }
