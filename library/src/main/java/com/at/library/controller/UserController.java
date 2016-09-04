@@ -55,7 +55,7 @@ public class UserController {
 	}
 	
 	//TODO: Búsqueda por DNI y por nombre
-	@RequestMapping(value="/search",method={RequestMethod.GET})
+	@RequestMapping(method={RequestMethod.GET})
 	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
 							 @RequestParam(value="name",required=false) String name,
 							 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
