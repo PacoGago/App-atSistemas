@@ -59,7 +59,7 @@ public class UserController {
 	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
 							 @RequestParam(value="name",required=false) String name,
 							 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-			 				@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) throws NoUserException{
+			 				 @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) throws NoUserException{
 		log.debug(String.format("Búsqueda de usuario con dni: %s, nombre: %s",dni,name));
 		return userservice.findByParams(dni,name,new PageRequest(page,size));
 	}

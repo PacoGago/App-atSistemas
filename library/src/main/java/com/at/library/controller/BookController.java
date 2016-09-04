@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
-import com.at.library.exceptions.NoRentException;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -80,11 +78,4 @@ public class BookController {
 		return bookservice.findById(id);
 	}
 	
-	//TODO: Alquilieres de un libro
-	@RequestMapping(value="history/{id}", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id) throws NoBookException, NoRentException {
-		log.debug(String.format("Búsqueda de alquileres de un libro con id: %s", id));
-		List<RentDTO> rDTOs = bookservice.getHistory(id);
-		return rDTOs;
-	}
 }

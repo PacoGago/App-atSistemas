@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDao;
@@ -46,32 +44,18 @@ public class RentServiceImpl implements RentService{
 	
 	@Autowired
 	private DozerBeanMapper dozer;
-	
-	//@Autowired
-	//private EmployeeService employeeservice;
-	
+		
 	@Override
-	public List<RentDTO> findAll(Pageable pages) throws NoRentException{
+	public List<RentDTO> findAll() throws NoRentException{
 		
-		List<RentDTO> rents;
+		final Iterator<Rent> it = rentDao.findAll().iterator();
+		final List<RentDTO> rDTO = new ArrayList<>();
 		
-		if(pages.getPageSize()>10){
-			
-			rents = transform(rentDao.findAll(new PageRequest(pages.getPageNumber(),10)));
-			
-		}else{
-			rents = transform(rentDao.findAll(pages));
+		while (it.hasNext()) {
+			final Rent r = it.next();
+			rDTO.add(transform(r));
 		}
-		
-		if(rents.isEmpty()){
-			
-			throw new NoRentException();
-			
-		}else{
-			
-			return rents;
-			
-		}
+		return rDTO;
 	}
 
 	
@@ -183,6 +167,11 @@ public class RentServiceImpl implements RentService{
 		}
 	}
 	
+	@Override
+	public List<Rent> findBehind() {
+		return rentDao.behind();
+	}
+
 	@Override
 	public void delete(Integer id) throws NoBookException, NoRentException{
 		

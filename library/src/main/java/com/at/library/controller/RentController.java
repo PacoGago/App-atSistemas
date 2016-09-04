@@ -5,12 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
@@ -36,9 +34,8 @@ public class RentController {
 	private static final Logger log = LoggerFactory.getLogger(RentController.class);
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<RentDTO> getAll(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-			 					@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) throws NoRentException{
-		return rentservice.findAll(new PageRequest(page,size));
+	public List<RentDTO> getAll() throws NoRentException{
+		return rentservice.findAll();
 	}
 	
 	//TODO: Alquiler

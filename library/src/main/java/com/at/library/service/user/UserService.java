@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.UserDTO;
-import com.at.library.enums.UserEnum;
 import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.model.User;
@@ -68,13 +67,6 @@ public interface UserService {
 	void delete(UserDTO user)throws NoUserException;
 	
 	/**
-	 * Cambiamos el estadp del usuario
-	 * 
-	 * @param User, UserEnum
-	 */
-	//void setStatus(User u, UserEnum s) throws NoUserException;
-	
-	/**
 	 * Buscamos por id.
 	 * 
 	 * @param id
@@ -88,7 +80,7 @@ public interface UserService {
 	 * @param dni, name
 	 * @return List<UserDTO>
 	 */
-	List<UserDTO> findByParams(String dni, String name, Pageable pages) throws NoUserException;
+	public List<UserDTO> findByParams(String dni, String name, Pageable pages) throws NoUserException;
 
 	/**
 	 * Comprueba los usuarios a sancionar y los sanciona.
@@ -98,6 +90,7 @@ public interface UserService {
 	 */
 	void penalize();
 
+	
 	/**
 	 * Perdona a los usuarios.
 	 * 
@@ -105,7 +98,5 @@ public interface UserService {
 	 * @return List<UserDTO>
 	 */
 	void forgive();
-
-	
 
 }

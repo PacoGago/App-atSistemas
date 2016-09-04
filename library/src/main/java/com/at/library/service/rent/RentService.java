@@ -2,8 +2,6 @@ package com.at.library.service.rent;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
-
 import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
 import com.at.library.exceptions.NoDTOException;
@@ -20,7 +18,7 @@ public interface RentService {
 	 * 
 	 * @return listado de alquileres
 	 */
-	List<RentDTO> findAll(Pageable pages) throws NoRentException;
+	List<RentDTO> findAll() throws NoRentException;
 	
 	/**
 	 * Transfrma un alquiler en un alquilerDTO
@@ -65,13 +63,18 @@ public interface RentService {
 	void delete(Integer id) throws NoBookException, NoRentException;
 
 	/**
+	 * Devolvemos los alquileres atrasados.
+	 * 
+	 * @return List<Rent>
+	 */
+	List<Rent> findBehind();
+	
+	/**
 	 * Historial de alquileres de un libro.
 	 * 
 	 * @return List<RentDTO>
 	 */
 	List<RentDTO> getByBookId(Integer bookId) throws NoRentException;
-
-	
 
 
 

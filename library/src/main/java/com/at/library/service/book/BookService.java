@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.dto.RentDTO;
+
 import com.at.library.exceptions.NoBookException;
-import com.at.library.exceptions.NoRentException;
+
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -113,13 +113,7 @@ public interface BookService {
 	 */
 	List<BookDTO> findByParams(String title, String author, String isbn, Pageable pages) throws NoBookException;
 
-	/**
-	 * Historial de alquileres de un libro.
-	 * 
-	 * @param bookId
-	 * @return List<RentDTO>
-	 */
-	List<RentDTO> getHistory(Integer bookId) throws NoBookException, NoRentException;
+
 
 	Book getById(Integer id) throws NoBookException;
 

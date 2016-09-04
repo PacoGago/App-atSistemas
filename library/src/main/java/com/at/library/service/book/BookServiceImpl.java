@@ -14,12 +14,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
-import com.at.library.dto.RentDTO;
+
 import com.at.library.dto.enums.StatusBook;
 import com.at.library.exceptions.NoBookException;
-import com.at.library.exceptions.NoRentException;
+
 import com.at.library.model.Book;
-import com.at.library.service.rent.RentService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -29,9 +28,6 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private BookDao bookDao;
 	
-	@Autowired
-	private RentService rentservice;
-
 	@Autowired
 	private DozerBeanMapper dozer;
 
@@ -209,21 +205,8 @@ public class BookServiceImpl implements BookService {
 		//List<BookDTO> books = bookDao.findByTAI(title, author, isbn);
 		//return books;
 	}
-	
-	@Override
-	public List<RentDTO> getHistory(Integer bookId) throws NoBookException, NoRentException{
-		
-		//TODO: Capturar la excepción cuando se haga del noRent
-		Book b = bookDao.findOne(bookId);
-		
-		if(b==null){
-			throw new NoBookException ();
-		}
-		else{
-			List<RentDTO> rDTOs = rentservice.getByBookId(bookId);
-			return rDTOs;
-		}
-	}
+
+
 	
 	public void findGoogleApi(BookDTO bDTO){
 		
