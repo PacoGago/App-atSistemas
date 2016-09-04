@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.exceptions.NoUserException;
 import com.at.library.service.user.UserService;
 
 @RestController
@@ -54,8 +56,10 @@ public class UserController {
 	//TODO: Búsqueda por DNI y por nombre
 	@RequestMapping(value="/search",method={RequestMethod.GET})
 	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
-							 @RequestParam(value="name",required=false) String name){
+							 @RequestParam(value="name",required=false) String name,
+							 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			 				@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) throws NoUserException{
 		log.debug(String.format("Búsqueda de usuario con dni: %s, nombre: %s",dni,name));
-		return userservice.findByParams(dni,name);
+		return userservice.findByParams(dni,name,new PageRequest(page,size));
 	}
 }

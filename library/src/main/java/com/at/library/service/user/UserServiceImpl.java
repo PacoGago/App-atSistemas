@@ -9,12 +9,15 @@ import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
 import com.at.library.enums.UserEnum;
+import com.at.library.exceptions.NoUserException;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -135,23 +138,35 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public List<UserDTO> findByParams(String dni, String name) {
+	public List<UserDTO> findByParams(String dni, String name, Pageable pages) throws NoUserException{
 		
-		List<UserDTO> users = transform(userDao.find(dni,name));
+		List<UserDTO> users;
 		
-		final Iterator<UserDTO> it = users.iterator();
-		final List<UserDTO> usersDTO = new ArrayList<>();
-		
-		while (it.hasNext()) {
-			
-			final UserDTO uDTO = it.next();
-			
-			if (uDTO.getStatus() != UserEnum.ERASED){
-				usersDTO.add(uDTO);
-			}
+		if (pages.getPageSize()>10){
+			users = transform(userDao.find(dni,name,new PageRequest(pages.getPageNumber(),10)));
+		}else{
+			users = transform(userDao.find(dni,name,pages));
 		}
 		
-		return usersDTO;
-		
+		if(users.isEmpty()){
+			
+			throw new NoUserException();
+			
+		}else{
+			
+			final Iterator<UserDTO> it = users.iterator();
+			final List<UserDTO> usersDTO = new ArrayList<>();
+			
+			while (it.hasNext()) {
+				
+				final UserDTO uDTO = it.next();
+				
+				if (uDTO.getStatus() != UserEnum.ERASED){
+					usersDTO.add(uDTO);
+				}
+			}
+			
+			return usersDTO;
+		}
 	}
 }

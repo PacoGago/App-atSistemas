@@ -2,7 +2,10 @@ package com.at.library.service.user;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.UserDTO;
+import com.at.library.exceptions.NoUserException;
 import com.at.library.model.User;
 
 public interface UserService {
@@ -76,7 +79,7 @@ public interface UserService {
 	 * @param dni, name
 	 * @return List<UserDTO>
 	 */
-	List<UserDTO> findByParams(String dni, String name);
+	List<UserDTO> findByParams(String dni, String name, Pageable pages) throws NoUserException;
 
 	/**
 	 * Comprueba los usuarios a sancionar y los sanciona.
