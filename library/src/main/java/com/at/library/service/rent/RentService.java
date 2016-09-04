@@ -62,7 +62,7 @@ public interface RentService {
 	 * @param id
 	 * @return
 	 */
-	void delete(Integer id) throws NoBookException;
+	void delete(Integer id) throws NoBookException, NoRentException;
 
 	/**
 	 * Devolvemos los alquileres atrasados.
@@ -76,7 +76,7 @@ public interface RentService {
 	 * 
 	 * @return List<RentDTO>
 	 */
-	List<RentDTO> getByBookId(Integer bookId);
+	List<RentDTO> getByBookId(Integer bookId) throws NoRentException;
 
 
 

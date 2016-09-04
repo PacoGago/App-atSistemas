@@ -17,6 +17,7 @@ import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.enums.StatusBook;
 import com.at.library.exceptions.NoBookException;
+import com.at.library.exceptions.NoRentException;
 import com.at.library.model.Book;
 import com.at.library.service.rent.RentService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -210,7 +211,7 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public List<RentDTO> getHistory(Integer bookId) throws NoBookException {
+	public List<RentDTO> getHistory(Integer bookId) throws NoBookException, NoRentException{
 		
 		//TODO: Capturar la excepción cuando se haga del noRent
 		Book b = bookDao.findOne(bookId);

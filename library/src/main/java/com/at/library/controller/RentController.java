@@ -50,7 +50,7 @@ public class RentController {
 	
 	//TODO: Devolver
 	@RequestMapping(value = "/{idBook}", method = {RequestMethod.DELETE})
-	public void delete(@PathVariable("idBook") Integer id) throws NoBookException{
+	public void delete(@PathVariable("idBook") Integer id) throws NoBookException, NoRentException{
 		log.debug(String.format("Eliminamos un alquiler por el id del libro: %s", id));
 		rentservice.delete(id);
 	}
@@ -64,7 +64,7 @@ public class RentController {
 	
 	//TODO: Alquileres de un libro
 	@RequestMapping(value="/{id}",method={RequestMethod.GET})
-	public List<RentDTO> get(@PathVariable("id") Integer id) throws NoBookException{
+	public List<RentDTO> get(@PathVariable("id") Integer id) throws NoBookException, NoRentException{
 		log.debug(String.format("Historial de un alquiler por su id: %s", id));
 		return rentservice.getByBookId(id);
 		//return null;

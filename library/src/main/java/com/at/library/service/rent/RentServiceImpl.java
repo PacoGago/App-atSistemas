@@ -169,7 +169,7 @@ public class RentServiceImpl implements RentService{
 	}
 	
 	@Override
-	public List<RentDTO> getByBookId(Integer bookId){
+	public List<RentDTO> getByBookId(Integer bookId) throws NoRentException{
 		
 		final List<RentDTO> rDTOs = transform(rentDao.findBookById(bookId));
 		
@@ -179,8 +179,7 @@ public class RentServiceImpl implements RentService{
 			
 		}else{
 			
-			//TODO: Lanzar excepción no hay alquileres de ese libro
-			return null;
+			throw new NoRentException();
 		}
 	}
 	
@@ -190,7 +189,7 @@ public class RentServiceImpl implements RentService{
 	}
 
 	@Override
-	public void delete(Integer id) throws NoBookException{
+	public void delete(Integer id) throws NoBookException, NoRentException{
 		
 		Rent r = findById(id);
 		
@@ -200,6 +199,10 @@ public class RentServiceImpl implements RentService{
 			bookservice.Status(b);
 			r.setStatus(StatusRent.COMPLETED);
 			rentDao.save(r);
+			
+		}else{
+			
+			throw new NoRentException();
 			
 		}
 	}	
