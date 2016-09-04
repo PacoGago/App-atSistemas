@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.service.user.UserService;
 
@@ -34,7 +35,7 @@ public class UserController {
 	
 	//TODO: Crear
 	@RequestMapping(method = { RequestMethod.POST })
-	public UserDTO create(@RequestBody UserDTO user){
+	public UserDTO create(@RequestBody UserDTO user)throws NoDTOException{
 		log.debug(String.format("Crearmos el usuario siguiente: %s", user));
 		return userservice.create(user);
 	}
@@ -48,7 +49,7 @@ public class UserController {
 	
 	//TODO: Borrar por DTO
 	@RequestMapping(method = {RequestMethod.DELETE})
-	public void delete(@RequestBody UserDTO user){
+	public void delete(@RequestBody UserDTO user) throws NoUserException{
 		log.debug(String.format("Eliminamos un usuario por su id: %s", user));
 		userservice.delete(user);
 	}

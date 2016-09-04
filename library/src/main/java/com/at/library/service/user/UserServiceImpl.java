@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
 import com.at.library.enums.UserEnum;
+import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
@@ -109,12 +110,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDTO create(UserDTO user) {
-		User u = transform(user);
-		final Date d = new Date();
-		u.setStatus(UserEnum.ABLE);
-		u.setStartDate(d);
-		return transform(userDao.save(u));
+	public UserDTO create(UserDTO user) throws NoDTOException{
+		
+		if(user == null){
+			throw new NoDTOException();
+		}else{
+			User u = transform(user);
+			final Date d = new Date();
+			u.setStatus(UserEnum.ABLE);
+			u.setStartDate(d);
+			return transform(userDao.save(u));
+		}
 	}
 
 	@Override
@@ -125,10 +131,14 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void delete(UserDTO user) {
+	public void delete(UserDTO user) throws NoUserException{
 		final User u = userDao.findOne(user.getId());
-		u.setStatus(UserEnum.ERASED);
-		userDao.save(u);
+		if(u == null){
+			throw new NoUserException();
+		}else{
+			u.setStatus(UserEnum.ERASED);
+			userDao.save(u);
+		}
 	}
 
 	@Override

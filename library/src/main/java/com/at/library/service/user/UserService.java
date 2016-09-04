@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.model.User;
 
@@ -48,7 +49,7 @@ public interface UserService {
 	 * @param UserDTO
 	 * @return UserDTO
 	 */
-	UserDTO create(UserDTO user);
+	UserDTO create(UserDTO user) throws NoDTOException;
 	
 	/**
 	 * Eliminamos el usuario.
@@ -63,7 +64,7 @@ public interface UserService {
 	 * 
 	 * @param UserDTO user
 	 */
-	void delete(UserDTO user);
+	void delete(UserDTO user)throws NoUserException;
 	
 	/**
 	 * Buscamos por id.
