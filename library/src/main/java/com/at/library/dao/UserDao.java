@@ -21,4 +21,12 @@ public interface UserDao extends CrudRepository<User, Integer> {
 	@Query(value = "SELECT u from User as u where (u.dni like %:dni% OR :dni is null) AND (u.name like %:name% OR :name is null)")
 	List<User> find(@Param(value="dni") String dni, @Param(value="name") String name, Pageable pages);
 	
+	/**
+	 * Realiza una búsqueda de usuarios que a dia de hoy ya hayan cumplido la pena
+	 * 
+	 * @return listado de usuarios
+	 */
+	@Query(value="SELECT u from User as u where u.forgiveDate<=CURRENT_DATE")
+	List<User> findUnable();
+	
 }

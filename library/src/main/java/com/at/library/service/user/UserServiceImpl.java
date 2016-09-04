@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +54,23 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	@Scheduled(cron = "15 0/1 * * * ?")
-	public void penalize() {
-		//Este log lo ponemos cuando realmente se vaya penalizar a alguien.
-		log.debug(String.format("Buscamos los usarios a penalizar."));
+	public void setStatus(User user, UserEnum stat) throws NoUserException {
+		
+		if(user==null){throw new NoUserException();}
+		else{
+			user.setStatus(stat);
+			userDao.save(user);
+		}
+	}
+	
+	@Override
+	@Scheduled(cron = "0 0 * * * *")
+	public void penalize() throws NoUserException{
 		
 		final Iterable<Rent> ir = rentservice.findBehind();
 		final Iterator<Rent> it = ir.iterator();
+		
+		DateTime d = new DateTime(new Date());
 		
 		while(it.hasNext()){
 			
@@ -66,21 +78,43 @@ public class UserServiceImpl implements UserService{
 			
 			if(u.getForgiveDate() == null){
 				
+				Rent r = it.next();
 				
+				//vemos los dias que hay que penalizar: 1 semana por cada dia
+				DateTime actualDate = new DateTime(new Date());
+				DateTime finalDate = new DateTime(r.getEndDate());
+				Integer senteceDays = Days.daysBetween(actualDate, finalDate).getDays();
+				if(senteceDays == 0){senteceDays = 1;}
+				Date senteceDate = d.plusDays(7*senteceDays).toDate();
 				
-			}else{
-				
-				
+				//Gastigamos el usuario y aplicamos la pena
+				log.debug(String.format("Castigamos al usuario."));
+				setStatus(u, UserEnum.UNABLE);
+				u.setPunishDate(new Date());
+				u.setForgiveDate(senteceDate);
+			
 			}
 		}
 	}
 	
 	@Override
 	//Cada minuto al segundo 45
-	@Scheduled(cron = "45 0/1 * * * ?")
+	@Scheduled(cron = "15 0 * * * *")
 	public void forgive() {
-		//Este log lo ponemos cuando realmente se vaya a perdonar.
-		log.debug(String.format("Buscamos a quien perdonar."));
+		
+		final Iterable<User> punishedUsers = userDao.findUnable();
+		final Iterator<User> iterator = punishedUsers.iterator();
+		
+		while(iterator.hasNext()){
+			
+			final User u = iterator.next();
+			
+			//Perdonamos a los usuarios
+			log.debug(String.format("Buscamos a quien perdonar."));
+			u.setPunishDate(null);
+			u.setForgiveDate(null);
+			u.setStatus(UserEnum.ABLE);
+		}
 	}
 	
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.enums.UserEnum;
 import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.model.User;
@@ -75,6 +76,13 @@ public interface UserService {
 	UserDTO findById(Integer id);
 	
 	/**
+	 * Modificación del estado de un usuario.
+	 * 
+	 * @param User , UserEnum
+	 */
+	public void setStatus(User user, UserEnum stat) throws NoUserException;
+	
+	/**
 	 * Buscamos por dni y nombre.
 	 * 
 	 * @param dni, name
@@ -88,7 +96,7 @@ public interface UserService {
 	 * @param dni, name
 	 * @return List<UserDTO>
 	 */
-	void penalize();
+	void penalize()  throws NoUserException;
 
 	
 	/**
