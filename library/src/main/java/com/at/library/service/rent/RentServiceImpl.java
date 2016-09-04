@@ -7,16 +7,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.enums.StatusBook;
 import com.at.library.dto.enums.StatusRent;
+import com.at.library.enums.UserEnum;
 import com.at.library.exceptions.NoBookException;
+import com.at.library.exceptions.NoDTOException;
+import com.at.library.exceptions.NoRentException;
+import com.at.library.exceptions.NoUserException;
+import com.at.library.exceptions.RentedBookException;
+import com.at.library.exceptions.UnableUserException;
 import com.at.library.model.Book;
 //import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -45,16 +51,27 @@ public class RentServiceImpl implements RentService{
 	//private EmployeeService employeeservice;
 	
 	@Override
-	public List<RentDTO> findAll() {
-		final Iterable<Rent> findAll = rentDao.findAll();
-		final Iterator<Rent> iterator = findAll.iterator();
-		final List<RentDTO> res = new ArrayList<>();
-		while (iterator.hasNext()) {
-			final Rent r = iterator.next();
-			final RentDTO rDTO = transform(r);
-			res.add(rDTO);
+	public List<RentDTO> findAll(Pageable pages) throws NoRentException{
+		
+		List<RentDTO> rents;
+		
+		if(pages.getPageSize()>10){
+			
+			rents = transform(rentDao.findAll(new PageRequest(pages.getPageNumber(),10)));
+			
+		}else{
+			rents = transform(rentDao.findAll(pages));
 		}
-		return res;
+		
+		if(rents.isEmpty()){
+			
+			throw new NoRentException();
+			
+		}else{
+			
+			return rents;
+			
+		}
 	}
 
 	
@@ -85,50 +102,54 @@ public class RentServiceImpl implements RentService{
 		
 		return rentsDTO;
 	}
-
-	private static final Logger log = LoggerFactory.getLogger(RentServiceImpl.class);
 	
 	@Override
-	public RentDTO create(RentDTO rent) throws NoBookException{
+	public RentDTO create(RentDTO rent) throws NoBookException, RentedBookException, NoUserException, UnableUserException, NoDTOException{
 		
-		log.debug(String.format("Vamos a crear el alquiler siguiente: %s", rent.getIdBook()));
-		Book b = bookservice.getById(rent.getIdBook());
-		
-		if (b != null){
-				
-			if (bookservice.getStatus(b)){
-				
-				final User user = userservice.transform(userservice.findById(rent.getIdUser()));
-					
-				if (user != null){
-						
-						RentPK rentPK = new RentPK();
-						rentPK.setBook(b);
-						Date d = new Date();
-						rentPK.setStartDate(d);
-						
-						Rent r = new Rent();
-						r.setRentpk(rentPK);
-						r.setUser(user);
-						DateTime date = new DateTime(d);
-						r.setEndDate(date.plusDays(7).toDate());
-						rentDao.save(r);
-						
-						b.setStatus(StatusBook.RENTED);
-						bookservice.update(bookservice.transform(b));
-						
-						RentDTO rDTO = new RentDTO();
-						rDTO.setIdBook(r.getRentpk().getBook().getId());
-						rDTO.setIdUser(r.getUser().getId());
-						
-						return rDTO;
-						
-				}else{return null;}//Devolver excepción
-					
-			}else{return null;}//Devolver Excepción
-				
-		}else{throw new NoBookException();}
+		if(rent!=null){
 			
+			Book b = bookservice.getById(rent.getIdBook());
+			
+			if (b != null){
+					
+				if (bookservice.getStatus(b)){
+					
+					final User user = userservice.transform(userservice.findById(rent.getIdUser()));
+						
+					if (user != null){
+						
+						if(user.getStatus() == UserEnum.ABLE){
+							
+							RentPK rentPK = new RentPK();
+							rentPK.setBook(b);
+							Date d = new Date();
+							rentPK.setStartDate(d);
+							
+							Rent r = new Rent();
+							r.setRentpk(rentPK);
+							r.setUser(user);
+							DateTime date = new DateTime(d);
+							r.setEndDate(date.plusDays(7).toDate());
+							rentDao.save(r);
+							
+							b.setStatus(StatusBook.RENTED);
+							bookservice.update(bookservice.transform(b));
+							
+							RentDTO rDTO = new RentDTO();
+							rDTO.setIdBook(r.getRentpk().getBook().getId());
+							rDTO.setIdUser(r.getUser().getId());
+							
+							return rDTO;
+							
+						}else{throw new UnableUserException();}
+				
+					}else{throw new NoUserException();}
+						
+				}else{throw new RentedBookException();}
+					
+			}else{throw new NoBookException();}
+			
+		}else{throw new NoDTOException();}	
 	}
 		
 	@Override

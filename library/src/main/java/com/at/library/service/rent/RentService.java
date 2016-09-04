@@ -2,8 +2,15 @@ package com.at.library.service.rent;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.RentDTO;
 import com.at.library.exceptions.NoBookException;
+import com.at.library.exceptions.NoDTOException;
+import com.at.library.exceptions.NoRentException;
+import com.at.library.exceptions.NoUserException;
+import com.at.library.exceptions.RentedBookException;
+import com.at.library.exceptions.UnableUserException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -13,7 +20,7 @@ public interface RentService {
 	 * 
 	 * @return listado de alquileres
 	 */
-	List<RentDTO> findAll();
+	List<RentDTO> findAll(Pageable pages) throws NoRentException;
 	
 	/**
 	 * Transfrma un alquiler en un alquilerDTO
@@ -39,7 +46,7 @@ public interface RentService {
 	 * @param book
 	 * @return RentDTO
 	 */
-	RentDTO create(RentDTO rent) throws NoBookException;
+	RentDTO create(RentDTO rent) throws NoBookException, RentedBookException, NoUserException, UnableUserException, NoDTOException;
 	
 	/**
 	 * Buscamos un alquiler por el id del libro
