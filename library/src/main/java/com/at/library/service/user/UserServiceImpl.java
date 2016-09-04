@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,28 +52,12 @@ public class UserServiceImpl implements UserService{
 		return res;
 	}
 	
+	
+	
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
 	public void penalize() {
-		//Este log lo ponemos cuando realmente se vaya penalizar a alguien.
-		log.debug(String.format("Buscamos los usarios a penalizar."));
 		
-		final Iterable<Rent> ir = rentservice.findBehind();
-		final Iterator<Rent> it = ir.iterator();
-		
-		while(it.hasNext()){
-			
-			final User u = it.next().getUser();
-			
-			if(u.getForgiveDate() == null){
-				
-				
-				
-			}else{
-				
-				
-			}
-		}
 	}
 	
 	@Override

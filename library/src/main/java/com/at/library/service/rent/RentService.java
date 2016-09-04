@@ -65,18 +65,13 @@ public interface RentService {
 	void delete(Integer id) throws NoBookException, NoRentException;
 
 	/**
-	 * Devolvemos los alquileres atrasados.
-	 * 
-	 * @return List<Rent>
-	 */
-	List<Rent> findBehind();
-	
-	/**
 	 * Historial de alquileres de un libro.
 	 * 
 	 * @return List<RentDTO>
 	 */
 	List<RentDTO> getByBookId(Integer bookId) throws NoRentException;
+
+	
 
 
 

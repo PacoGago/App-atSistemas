@@ -184,11 +184,6 @@ public class RentServiceImpl implements RentService{
 	}
 	
 	@Override
-	public List<Rent> findBehind() {
-		return rentDao.behind();
-	}
-
-	@Override
 	public void delete(Integer id) throws NoBookException, NoRentException{
 		
 		Rent r = findById(id);
