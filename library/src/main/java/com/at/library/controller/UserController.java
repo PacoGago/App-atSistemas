@@ -18,6 +18,8 @@ import com.at.library.exceptions.NoDTOException;
 import com.at.library.exceptions.NoUserException;
 import com.at.library.service.user.UserService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -28,7 +30,10 @@ public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	
-	//TODO: Crear
+	@ApiOperation(value = "Create a Library User.",
+		    notes = "Only a user.",
+		    response = UserDTO.class,
+		    responseContainer = "User")
 	@RequestMapping(method = { RequestMethod.POST })
 	public UserDTO create(@RequestBody UserDTO user)throws NoDTOException{
 		log.debug(String.format("Crearmos el usuario siguiente: %s", user));
